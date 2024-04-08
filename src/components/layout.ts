@@ -10,7 +10,6 @@ import './sidebar.ts'
 export class App extends TwLitElement {
 
 
-
     render() {
 
         return html`
@@ -49,10 +48,8 @@ export class App extends TwLitElement {
                         </div>
                     </header>
                     <!--    内容区     -->
-                    <div class="p-4 relative flex-1 ">
-                        <div class=" absolute inset-0 overflow-y-auto overflow-x-hidden">
-                            <slot></slot>
-                        </div>
+                    <div class=" relative flex-1 ">
+                        <slot></slot>
                     </div>
                 </section>
             </article>

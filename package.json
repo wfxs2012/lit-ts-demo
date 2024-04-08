@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@banana-ui/banana": "^1.17.10",
+    "@banana-ui/banana": "^1.17.11",
     "@lit-labs/context": "^0.5.1",
     "@lit-labs/router": "^0.1.3",
     "@popperjs/core": "^2.11.8",
@@ -25,5 +25,6 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.7"
-  }
+  },
+  "packageManager": "yarn@4.1.1"
 }

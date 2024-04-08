@@ -7,3 +7,12 @@
         @apply pt-1 pb-1 pl-4 pr-4 text-purple-300 bg-slate-700;
     }
 }
+
+:host {
+    padding: 10px;
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
