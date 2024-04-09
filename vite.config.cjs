@@ -41,6 +41,8 @@ export default defineConfig({
             'b-menu': getUrl('menu'),
             'b-menu-item': getUrl('menu-item'),
             'b-divider': getUrl('divider'),
+            'b-stepper': getUrl('stepper'),
+            'b-input': getUrl('input'),
         }
     }
     ,

@@ -5,6 +5,10 @@ import 'b-dropdown';
 import 'b-menu';
 import 'b-menu-item';
 import 'b-divider';
+import 'b-stepper';
+import 'b-input';
+import {ProductService} from "../../service/product.service.ts";
+import {repeat} from "lit/directives/repeat.js";
 
 
 @customElement('page-home')
@@ -27,7 +31,7 @@ export class Home extends LitElement {
         margin: 0;
         padding: 0;
         width: 100%;
-        table-layout: fixed;
+        table-layout: auto;
       }
 
       table caption {
@@ -38,14 +42,15 @@ export class Home extends LitElement {
       table tr {
         background-color: #f8f8f8;
         border: 1px solid #ddd;
-        padding: .35em;
+
       }
 
       table th,
       table td {
-        padding: .625em;
+        padding: 10px;
         text-align: center;
         word-break: break-word;
+        white-space: nowrap;
       }
 
       table th {
@@ -55,7 +60,7 @@ export class Home extends LitElement {
       }
 
 
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 768px) {
         table {
           border: 0;
         }
@@ -70,39 +75,80 @@ export class Home extends LitElement {
 
         table tr {
           display: block;
-          margin-bottom: 10px;
+          margin-bottom: 20px;
         }
 
         table td {
+          display: flex;
+          align-items: center;
+        }
+
+        table td:not(.not-label) {
           border-bottom: 1px solid #ddd;
           display: flex;
           justify-content: space-between;
           font-size: .8em;
-          text-align: right;
-
-
+          position: relative;
+          padding-left: 32%;
+          white-space: normal;
+          text-align: left;
         }
 
         table td::before {
-          /*
-          * aria-label has no advantage, it won't be read inside a table
-          content: attr(aria-label);
-          */
-
           left: 10px;
+          width: 30%;
+          position: absolute;
           content: attr(data-label);
           font-weight: bold;
+          white-space: nowrap;
           text-transform: uppercase;
           text-align: left;
-          padding-right: 10px;
+
+        }
+
+        table td.not-label::before {
+          display: none;
         }
 
         table td:last-child {
           border-bottom: 0;
         }
+
+
+      }
+
+      .image {
+
+
+      }
+
+      .image img {
+        min-width: 50px;
+        max-width: 100px;
+      }
+
+      .action {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: center;
       }
 
     `
+
+    private data: any = []
+
+    constructor() {
+        super();
+
+        const load = async () => {
+            this.data = await ProductService.getProductsMini()
+            console.log(this.data)
+        }
+        load()
+
+    }
 
 
     render(): TemplateResult {
@@ -123,40 +169,49 @@ export class Home extends LitElement {
                     </b-menu>
                 </b-dropdown>
 
-                <table>
-                    <caption>Lorem ipsum !</caption>
-                    <thead>
-                    <tr>
-                        <th>Account</th>
-                        <th>Due Date</th>
-                        <th>Amount</th>
-                        <th
-                        ">Period</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td data-label="Account">Visa - 3412</td>
-                        <td data-label="Due Date">04/01/2016</td>
-                        <td data-label="Amount">$1,190</td>
-                        <td data-label="Period">03/01/2016 - 03/31/2016</td>
-                    </tr>
-                    <tr>
-                        <td data-label="Account">Visa - 3412</td>
-                        <td data-label="Due Date">04/01/2016</td>
-                        <td data-label="Amount">$1,190</td>
-                        <td data-label="Period">03/01/2016 - 03/31/2016</td>
-                    </tr>
-                    <tr>
-                        <td data-label="Account">Visa - 3412</td>
-                        <td data-label="Due Date">04/01/2016</td>
-                        <td data-label="Amount">$1,190</td>
-                        <td data-label="Period">03/01/2016 - 03/31/2016</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div style="overflow-x: auto">
+                    <table>
+                        <caption>Lorem ipsum !</caption>
+                        <thead>
+                        <tr>
+                            <th style="width: 120px;">Image</th>
+                            <th>Title</th>
+                            <th>SKU</th>
+                            <th>Available qty</th>
+                            <th>Price</th>
 
+                            <th style="width: 300px;">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
 
+                        </tr>
+                        ${repeat(this.data,
+                                (item: any) => item.id,
+                                (item: any) => html`
+                                    <tr>
+                                        <td data-label="image" class="image  ">
+                                            <image src="${`https://primefaces.org/cdn/primereact/images/product/${item.image}`}"/>
+                                        </td>
+                                        <td data-label="title">${item.name}</td>
+                                        <td data-label="sku">${item.code}</td>
+                                        <td data-label="status">${item.inventoryStatus}</td>
+                                        <td data-label="price">${item.price}</td>
+                                        <td class="not-label">
+                                            <div class="action">
+                                                <b-stepper value="1"></b-stepper>
+                                                <b-button>Add to cart</b-button>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                `)
+                        }
+                        </tbody>
+                    </table>
+
+                </div>
             </article>
         `
     }
