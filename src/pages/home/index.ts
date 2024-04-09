@@ -201,7 +201,7 @@ export class Home extends LitElement {
                                         <td class="not-label">
                                             <div class="action">
                                                 <b-stepper value="1"></b-stepper>
-                                                <b-button>Add to cart</b-button>
+                                                <b-button type="primary" outline>Add to cart</b-button>
                                             </div>
 
                                         </td>
